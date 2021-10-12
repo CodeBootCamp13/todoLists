@@ -45,6 +45,7 @@ document.addEventListener('submit', function(event) {
 	} else if ( action[1] == 'newList' ) {
 		// create a new list
 
+		// TODO(homework)
 		// write code to capture the list name,
 		// create a new list object
 		// store it in the lists array
