@@ -1,8 +1,9 @@
 // TODO(erh) : think about adding dates (due dates, created date)
 
 // data model for storing our lists and items
+var myForm = null;
 var lists = [
-
+	/*
 	{
 		listTitle: 'List #1',
 		items: [
@@ -11,13 +12,7 @@ var lists = [
 			{ value: 'item 3', completed: false }
 		]
 	},
-	{
-		listTitle: 'List #2',
-		items: [
-			{ value: 'item 1', completed: false },
-			{ value: 'item 2', completed: false }
-		]
-	}
+	*/
 
 ];
 
@@ -39,22 +34,24 @@ document.addEventListener('submit', function(event) {
 			value: item, completed: false
 		};
 		lists[ listId ].items.push(fullItem);
-
-		renderTodoLists();
+		console.log(listId + ' passed to the function');
+		renderTodoLists(listId);
 
 	} else if ( action[1] == 'newList' ) {
 		// create a new list
 
 		// TODO(homework)
-		'ERIC WAS HERE';
 		// write code to capture the list name,
+		var myList = event.target.addList.value;
+
 		// create a new list object
+		var newListObj = { listTitle: myList, items: [] };
 		// store it in the lists array
 
-		renderTodoLists();
+		lists.push(newListObj);
+
+		renderTodoLists(lists.length - 1);
 	}
-
-
 
 });
 
@@ -71,10 +68,7 @@ document.addEventListener('click', function(event) {
 			myEl.style.display = 'none';
 
 			// completely remove the element from our object array
-			
-
 			lists[currentListId].items.splice(currentItemId, 1);
-
 
 		} else {
 			myEl.classList.add('done');
@@ -87,7 +81,7 @@ document.addEventListener('click', function(event) {
 
 
 // render todoLists
-function renderTodoLists() {
+function renderTodoLists(previousListId) {
 	var listsEl = document.getElementById('lists');
 	listsEl.innerHTML = '';
 
@@ -141,7 +135,11 @@ function renderTodoLists() {
 	'<input type="submit" value="+">' +
 	'</form></div>';
 	
-
+	// focus on the item input for the list we were just in
+	
+	if ( previousListId != undefined ) {
+		document.getElementById('item_' + previousListId).focus();
+	}
 
 }
 
