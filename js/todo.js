@@ -43,25 +43,12 @@ document.addEventListener('submit', function(event) {
 		renderTodoLists();
 
 	} else if ( action[1] == 'newList' ) {
-
 		// create a new list
-
-
 
 		// TODO(homework)
 		// write code to capture the list name,
-			var newList = document.getElementById('newListTitle') value;
-			console.log(newList); 
-
 		// create a new list object
-			var listObject = {
-				listTitle; newList,
-				items: []
-			}
-
 		// store it in the lists array
-			lists.push(listObject);
-
 
 		renderTodoLists();
 	}
@@ -149,7 +136,7 @@ function renderTodoLists() {
 	'<div class="blank listCard">' + 
 	'<h2>Create New List</h2>' +
 	'<form action="/newList" method="POST">' +
-	'<input id="newListTitle" type="text" name="addList">' +
+	'<input type="text" name="addList">' +
 	'<input type="submit" value="+">' +
 	'</form></div>';
 	
