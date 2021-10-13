@@ -2,7 +2,7 @@
 
 // data model for storing our lists and items
 var lists = [
-
+	/*
 	{
 		listTitle: 'List #1',
 		items: [
@@ -18,7 +18,7 @@ var lists = [
 			{ value: 'item 2', completed: false }
 		]
 	}
-
+	*/
 ];
 
 // capture all form submits and do something special
@@ -40,17 +40,22 @@ document.addEventListener('submit', function(event) {
 		};
 		lists[ listId ].items.push(fullItem);
 
-		renderTodoLists();
+		renderTodoLists(listId);
 
 	} else if ( action[1] == 'newList' ) {
 		// create a new list
 
 		// TODO(homework)
 		// write code to capture the list name,
-		// create a new list object
-		// store it in the lists array
+		var newListName = event.target.addList.value;
 
-		renderTodoLists();
+		// create a new list object
+		var listObj = { listTitle: newListName, items:[] };
+
+		// store it in the lists array
+		lists.push(listObj);
+
+		renderTodoLists(lists.length - 1);
 	}
 
 
@@ -86,7 +91,7 @@ document.addEventListener('click', function(event) {
 
 
 // render todoLists
-function renderTodoLists() {
+function renderTodoLists(focusListId) {
 	var listsEl = document.getElementById('lists');
 	listsEl.innerHTML = '';
 
@@ -141,6 +146,9 @@ function renderTodoLists() {
 	'</form></div>';
 	
 
+	if ( focusListId != undefined ) {
+		document.getElementById('item_' + focusListId).focus();
+	}
 
 }
 
