@@ -43,12 +43,26 @@ document.addEventListener('submit', function(event) {
 		renderTodoLists();
 
 	} else if ( action[1] == 'newList' ) {
+		var newLists = {
+			listTitle: 'New List',
+		};
+		 newLists[ listTitle ].item.push(fullItem)
+
 		// create a new list
 
 		// TODO(homework)
 		// write code to capture the list name,
 		// create a new list object
 		// store it in the lists array
+        function makeNewList() {
+			for ( var i = 0; i < lists.length; i++ ) {
+				var list = lists[i];
+		
+			var listAdd = document.createElement('div');
+			listAdd.classList.add('listCard');
+			listAdd.id = 'list_' + i;
+        
+
 
 		renderTodoLists();
 	}
