@@ -1,26 +1,15 @@
 // TODO(erh) : think about adding dates (due dates, created date)
 
 // data model for storing our lists and items
-var lists = [
-	/*
-	{
-		listTitle: 'List #1',
-		items: [
-			{ value: 'item 1', completed: true },
-			{ value: 'item 2', completed: false },
-			{ value: 'item 3', completed: false }
-		]
-	},
-	{
-		listTitle: 'List #2',
-		items: [
-			{ value: 'item 1', completed: false },
-			{ value: 'item 2', completed: false }
-		]
-	}
-	*/
-];
+var storageList = localStorage.getItem('lists');
+var lists = [];
+if ( storageList ) {
+	lists = JSON.parse(storageList);
+} else {
+	lists = [];
+}
 
+var eventObj = null;
 // capture all form submits and do something special
 document.addEventListener('submit', function(event) {
 	event.preventDefault();
@@ -36,7 +25,7 @@ document.addEventListener('submit', function(event) {
 		
 		// add the item to my list object
 		var fullItem = {
-			value: item, completed: false
+			value: item, completed: false, timeStamp: new Date()
 		};
 		lists[ listId ].items.push(fullItem);
 
@@ -47,7 +36,7 @@ document.addEventListener('submit', function(event) {
 
 		// TODO(homework)
 		// write code to capture the list name,
-		var newListName = event.target.addList.value;
+		var newListName = document.getElementById('addList_id').value;
 
 		// create a new list object
 		var listObj = { listTitle: newListName, items:[] };
@@ -85,6 +74,10 @@ document.addEventListener('click', function(event) {
 
 			// mark the element in our object array as "completed"
 			lists[currentListId].items[currentItemId].completed = true;
+			// update the timestamp
+			//lists[currentListId].items[currentItemId].timeStamp = new Date();
+
+			renderTodoLists();
 		}
 	}
 });
@@ -92,6 +85,10 @@ document.addEventListener('click', function(event) {
 
 // render todoLists
 function renderTodoLists(focusListId) {
+	localStorage.setItem('lists', JSON.stringify(lists));
+
+	// if i'm online... send our JSON list to our server
+
 	var listsEl = document.getElementById('lists');
 	listsEl.innerHTML = '';
 
@@ -125,7 +122,7 @@ function renderTodoLists(focusListId) {
 
 		listEl.innerHTML = listEl.innerHTML + 
 			'<li class="addItem"><form action="/list/' + i + '" method="POST">' +
-			'<input id="item_' + i + '" type="text" name="item">' +
+			'<input id="item_' + i + '" type="text" name="item">' + 
 			'<input type="submit" value="+">' +
 			'</form></li>';
 
@@ -141,7 +138,7 @@ function renderTodoLists(focusListId) {
 	'<div class="blank listCard">' + 
 	'<h2>Create New List</h2>' +
 	'<form action="/newList" method="POST">' +
-	'<input type="text" name="addList">' +
+	'<input type="text" id="addList_id" name="addList">' +
 	'<input type="submit" value="+">' +
 	'</form></div>';
 	
